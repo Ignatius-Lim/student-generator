@@ -1,0 +1,21 @@
+# Ignore the compiled executable (formatless files)
+main
+*.out
+*.exe
+
+# Ignore the entire output folder
+**/output/
+
+# Ignore system/editor files
+.DS_Store
+.vscode/
+
+# Ignore sensitive files (if you ever use them again)
+*.json
+!c_cpp_properties.json
+!launch.json
+!tasks.json
+!settings.json
+
+# build.Debug
+*.o
