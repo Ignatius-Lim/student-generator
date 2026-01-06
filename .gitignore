@@ -1,21 +1,10 @@
-# Ignore the compiled executable (formatless files)
-main
-*.out
-*.exe
+# Ignore everything
+*
 
-# Ignore the entire output folder
-**/output/
+# But not these extensions
+!*.cpp
+!*.h
+!*.json
 
-# Ignore system/editor files
-.DS_Store
-.vscode/
-
-# Ignore sensitive files (if you ever use them again)
-*.json
-!c_cpp_properties.json
-!launch.json
-!tasks.json
-!settings.json
-
-# build.Debug
-*.o
+# Also don't ignore directories themselves (so Git can see files inside)
+!*/
