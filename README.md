@@ -5,7 +5,7 @@ Ignatius Lim Sheng Hoong
 ## Why was this program created?  
 I created this program to apply my C++ skills for the purpose of practice and learning.  
 If you look at my codes, you may notice some minor inconsistency.  
-The inconsistences are on purpose. I was simplying practicing on applying different solutions.  
+The inconsistences are the results of me practicing on applying different solutions.  
 
 ## When did this project start and complete?
 1. **START:** 17 Dec 2025
@@ -13,7 +13,7 @@ The inconsistences are on purpose. I was simplying practicing on applying differ
 3. **Porting:** 28 Dec 2025 *(Imported the codes from my old Github account due to account issue, then continue to develop the codes)*
 4. **Clean-up:** 3 Jan 2026 *(Tidying is completed. README.md file is completed. Codes are committed and pushed)*
 5. **COMPLETE:** 7 Jan 2026
-6. **Update 1:** 7 Jan 2026 (Added feature to inform user that database file exists and if they want to regenerate a new one)
+6. **Update 1:** 7 Jan 2026 (Added feature to inform user that database file exists and asks if user wants to regenerate a new one)
 7. **Update 2:** 7 Jan 2026 (Added feature to allow user to customize the number of student profiles to generate)
     
 ## What does this program do?  
