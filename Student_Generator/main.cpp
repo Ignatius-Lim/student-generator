@@ -19,11 +19,12 @@ bool read_profiles();
 void display_representative(std::string, std::string, std::string, int, bool);
 bool pick_representative();
 bool read_representative();
+char read_single_char(const std::string&);
 
 //======================================= Misc ===================================
 void initiate_generator(int);
 void delete_file(std::string, std::filesystem::path);
-bool is_digits_only(const std::string&);
+
 
 //================================== Global variables =============================
 int const DEFAULT_AMT = 100; //The default amount of profiles to generate
@@ -46,9 +47,19 @@ int main()
             false
         );
 
-        int choice;
-        std::cin >> choice;
-        std::cin.ignore(); // remove leftover newline
+        int choice;              
+        
+        //If cin failbit is set, due to user inputting non-numerical character
+        if(!(std::cin >> choice))
+        {
+            std::cin.clear(); // reset fail state
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Clears the stream
+
+            show_screen("Please provide valid input!");
+            continue; // restart menu loop
+        }
+
+        std::cin.ignore(); // remove leftover newline  
 
         switch(choice)
         {
@@ -64,17 +75,10 @@ int main()
                         bool is_invalid_input;
 
                         do
-                        {                            
-                            std::cout << "Enter Y or N: " << std::endl;
+                        {                   
+                            is_invalid_input = false;                            
 
-                            is_invalid_input = false;
-                            
-                            char regen;
-                            std::cin >> regen;
-                            std::cin.ignore();
-                            regen = std::tolower(static_cast<unsigned char>(regen));
-
-                            std::cout << std::endl;
+                            char regen = std::tolower(static_cast<unsigned char>(read_single_char("Enter Y or N: ")));                            
 
                             switch(regen)
                             {
@@ -214,6 +218,29 @@ void show_screen(const std::string& content, bool waitForEnter, bool clear_displ
     }
 }
 
+char read_single_char(const std::string& literal) 
+{
+    while (true) 
+    {
+        if(!literal.empty())
+            std::cout << literal << std::endl;
+        
+        std::string line;
+        std::getline(std::cin, line);
+
+        std::cout << std::endl;
+
+        if (line.size() == 1) //If single character, return that character
+            return line[0];
+
+        std::cout << "Invalid input. Please enter exactly one character! " << std::endl;
+
+        if(literal.empty())
+            std::cout << "Try again: " << std::endl;
+
+    }
+}
+
 void prompt_generate_database()
 {    
     show_screen
@@ -229,40 +256,42 @@ void prompt_generate_database()
 
     do
     {
-        is_invalid_input = false;
+        is_invalid_input = false;        
 
-        std::cout << "Enter Y or N: " << std::endl;
-        char option;
-        std::cin >> option;
-        std::cin.ignore(); // remove leftover newline
-        option = std::tolower(static_cast<unsigned char>(option));
-
-        std::cout << std::endl;
+        char option = std::tolower(static_cast<unsigned char>(read_single_char("Enter Y or N: ")));        
 
         switch(option)
         {
             //Custom setting
             case 'y':            
                 {                
-                    show_screen("Please input the number of student profiles you would like to generate.", false);
+                    show_screen("Please input the number of student profiles you would like to generate:", false);
 
-                    std::string input;
+                    int input;
 
                     while (true)
-                    {
-                        std::cout << "Enter digits only: ";
-                        std::cin >> input;
-                        std::cin.ignore(); // remove leftover newline
+                    {                       
 
-                        std::cout << std::endl;
+                        if(!(std::cin >> input))
+                        {
+                            std::cin.clear(); // reset fail state
+                            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Clears the stream
+                            std::cout << std::endl;
 
-                        if (is_digits_only(input))
+                            std::cout << "Invalid input. Digits only!" << std::endl;
+                            std::cout << "Enter digits only: ";
+                            continue; // restart menu loop
+                        }
+                        else
+                        {
+                            std::cin.ignore(); // remove leftover newline
+                            std::cout << std::endl;
                             break;
-
-                        std::cout << "Invalid input. Digits only!" << std::endl;
+                        }
+                        
                     }
 
-                    Common::entries_amt = std::stoi(input);                
+                    Common::entries_amt = input;                
 
                     initiate_generator(Common::entries_amt);
                     break;
@@ -296,19 +325,6 @@ void initiate_generator(int amt)
     std::this_thread::sleep_for(std::chrono::milliseconds(500)); 
     show_screen(std::to_string(amt) + " profiles generated successfully!", true, false);
 }
-
-bool is_digits_only(const std::string& s)
-{
-    if (s.empty()) return false;
-
-    for (char c : s)
-    {
-        if (!std::isdigit(static_cast<unsigned char>(c)))
-            return false;
-    }
-    return true;
-}
-
 
 //Read student profiles from the database
 bool read_profiles()
@@ -474,12 +490,7 @@ bool prompt_delete_record()
 {    
     std::cout << "Do you want to delete existing school representative record? (Y/N):" << std::endl;
 
-    char option;
-    std::cin >> option;
-    std::cin.ignore(); // remove leftover newline
-    option = std::tolower(static_cast<unsigned char>(option));
-
-    std::cout << std::endl;
+    char option = std::tolower(static_cast<unsigned char>(read_single_char("")));
 
     switch(option)
     {

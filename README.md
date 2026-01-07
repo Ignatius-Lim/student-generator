@@ -1,4 +1,17 @@
 # Student Profiles Generator  
+## How to run this program?  
+1. Launch Codespaces by clicking on the green Code button and go to Codespace tab.
+2. In Codespaces, install the following extensions:
+    - C/C++ (by Microsoft)
+    - C/C++ Extension Pack (by Microsoft)
+    - CMake (by twxs)
+    - CMake Tools (by Microsoft)
+3. Wait for the extensions to finish installing successfully.
+4. Click to open **main.cpp**, then click the **play icon with a bug** on the upper right of the screen.
+5. If prompted, choose **Debug C/C++ File**
+6. Now wait for the build to complete. It should take a while.
+7. Go to terminal and start interacting with the program.
+
 ## Who created this program?  
 Ignatius Lim Sheng Hoong
 
@@ -8,13 +21,19 @@ If you look at my codes, you may notice some minor inconsistency.
 The inconsistences are the results of me practicing on applying different solutions.  
 
 ## When did this project start and complete?
+### Project development timeline
 1. **START:** 17 Dec 2025
 2. **Hiatus:** 19 Dec 2025 to 27 Dec 2025 *(Holiday and sick)*
 3. **Porting:** 28 Dec 2025 *(Imported the codes from my old Github account due to account issue, then continue to develop the codes)*
 4. **Clean-up:** 3 Jan 2026 *(Tidying is completed. README.md file is completed. Codes are committed and pushed)*
 5. **COMPLETE:** 7 Jan 2026
-6. **Update 1:** 7 Jan 2026 (Added feature to inform user that database file exists and asks if user wants to regenerate a new one)
-7. **Update 2:** 7 Jan 2026 (Added feature to allow user to customize the number of student profiles to generate)
+
+### Updates and bug fixes
+#### 7 Jan 2026:
+1. **Update 1:** Added feature to inform user that database file exists and asks if user wants to regenerate a new one.
+2. **Update 2:** Added feature to allow user to customize the number of student profiles to generate.
+3. **Bug fix 1:** Fix a bug that causes infinite loop when the user provides non-numerical input when numbers are expected.
+4. **Bug fix 2** When user inputs multiple characters where a single character is expected, the program will no longer misidentify it as multiple inputs.
     
 ## What does this program do?  
 This program will generate a database of random student profiles and save them to a file.  
