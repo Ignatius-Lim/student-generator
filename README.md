@@ -17,16 +17,17 @@ The inconsistences are the results of me practicing on applying different soluti
 7. **Update 2:** 7 Jan 2026 (Added feature to allow user to customize the number of student profiles to generate)
     
 ## What does this program do?  
-This program will generate 100 random student profiles and save them to a file.  
+This program will generate a database of random student profiles and save them to a file.  
 Each student profile will have the following information:
 1. Random name (Determined by randomly generated ethnicity)
 2. Random dominant language (Influenced by ethnicity. Note that this is not the same as native languages)
 3. Random student ID
 
-Once the student profiles are generated and saved to the database file, the other parts of the program rely on the database file for their respective functions. So users can actually modify this database file to make changes to the entries according to their will.  
+Once the student profiles are generated and saved to the database file, the other parts of the program rely on the database file for their respective functions. So users can actually modify this database file to make changes to the entries according to their will. But user must follow strictly the formatting of the database file. The end of the database file must not have more than one blank line.
 
 <u>Below are all the functions of the program:</u>
-1. Generate 100 student profiles and save them to a file.
+1. Generate default/user-defined number of student profiles and save them to a file.  
+*(Default is 100 student profiles)*
 2. Read from the file and show a formatted display of the profiles on terminal.
 3. Randomly pick a school representative from the 100 generated students and save the result.  
 User can delete the result and re-pick a school representative randomly.
@@ -81,11 +82,13 @@ If a duplicate student ID is generated, the position number will be re-generated
 ### <u>Student profiles generator</u>  
 This module is the heart of the program. It triggers the previous 3 modules to generate their respective data.  
 The module then combines those data into a single student profile.  
-The module generates 100 of such student profiles, and then save them to a database file.  
+The module generates default/user-defined number of such student profiles, and then save them to a database file.  
 
 ### <u>Main menu</u>  
 This module handles the user interface and some minor logics. Below are what it does:  
-1. Triggers the student profiles generator.  
+1. Checks if there is an existing database of student profiles.
+    - If yes, asks user if they want to regenerate the database which will overwrite the existing one.
+    - If no, triggers the student profiles generator
 2. Read the database file generated, formats the data, and then displays it to the terminal screen. 
 If database file is not found, prompts user to generate it by using the generate function in Main Menu. 
 3. Checks if there is an existing record of a chosen school representative or not.  
