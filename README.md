@@ -12,7 +12,9 @@ The inconsistences are on purpose. I was simplying practicing on applying differ
 2. **Hiatus:** 19 Dec 2025 to 27 Dec 2025 *(Holiday and sick)*
 3. **Porting:** 28 Dec 2025 *(Imported the codes from my old Github account due to account issue, then continue to develop the codes)*
 4. **Clean-up:** 3 Jan 2026 *(Tidying is completed. README.md file is completed. Codes are committed and pushed)*
-5. **COMPLETE:** 7 Jan 2026     
+5. **COMPLETE:** 7 Jan 2026
+6. **Update 1:** 7 Jan 2026 (Added feature to inform user that database file exists and if they want to regenerate a new one)
+7. **Update 2:** 7 Jan 2026 (Added feature to allow user to customize the number of student profiles to generate)
     
 ## What does this program do?  
 This program will generate 100 random student profiles and save them to a file.  

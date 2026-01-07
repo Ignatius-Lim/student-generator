@@ -1,32 +1,43 @@
 #include <thread>   // for sleep_for
 #include <chrono>   // for milliseconds, seconds
 #include <filesystem> //For deleting file and detecting the presence of a file
+#include <cctype> //For detection of valid digits
 #include "student.h"
 
+//============================== Display functions =============================
 void clear_screen();
-
 //Add default values in show_screen declaration here to avoid "too few argumants" error
 void show_screen(const std::string& content, bool waitForEnter = true, bool clear_display = true, 
     std::string next_action = "return to main menu...");
 
+//=============================== Prompt functions =========
+void prompt_generate_database();
+bool prompt_delete_record();
+
+//============================= Read and pick functions =========================
 bool read_profiles();
 void display_representative(std::string, std::string, std::string, int, bool);
 bool pick_representative();
 bool read_representative();
+
+//======================================= Misc ===================================
+void initiate_generator(int);
 void delete_file(std::string, std::filesystem::path);
-bool prompt_delete_record();
+bool is_digits_only(const std::string&);
+
+//================================== Global variables =============================
+int const DEFAULT_AMT = 100; //The default amount of profiles to generate
+
 
 int main()
-{   
-    std::string stu_amount = std::to_string(Common::entries_amt);
-    
+{     
     while(true)
     {  
         // Show main menu
         show_screen
         (
             "=== Main Menu ===\n"
-            "1. Generate a database of " + stu_amount + " student profiles\n"
+            "1. Generate a database of student profiles\n"
             "2. Read from database\n"
             "3. Pick a school representative\n"
             "4. Delete database\n"
@@ -44,23 +55,61 @@ int main()
             //Generates a list of student profiles
             case 1:
                 {
-                    show_screen("Generating " + stu_amount + " student profiles...\n", false); 
-                    //Throughout this .cpp file, delays are added to make the user interface feels more natural
-                    // Delay 1 second
-                    std::this_thread::sleep_for(std::chrono::seconds(1));  
+                    if (std::filesystem::exists(Common::database_file))
+                    {                        
+                        show_screen("There is an existing database.\n"
+                            "Are you sure you want to generate a new database?\n"
+                            "Existing database will be overwritten.(Y/N):\n", false);                        
+                        
+                        bool is_invalid_input;
 
-                    //The constructor of StudentProfile class calls the various random generators.
-                    StudentProfile profile;
+                        do
+                        {                            
+                            std::cout << "Enter Y or N: " << std::endl;
 
-                    std::this_thread::sleep_for(std::chrono::milliseconds(500)); 
-                    show_screen("Profiles generated successfully!", true, false); 
+                            is_invalid_input = false;
+                            
+                            char regen;
+                            std::cin >> regen;
+                            std::cin.ignore();
+                            regen = std::tolower(static_cast<unsigned char>(regen));
+
+                            std::cout << std::endl;
+
+                            switch(regen)
+                            {
+                                case 'y':
+                                show_screen("You have chosen to regenerate the database.\n"
+                                    "Existing database will be overwritten.", true, true, "continue...");
+                                prompt_generate_database();
+                                break; 
+
+                                case 'n':
+                                    show_screen("You have chosen not to regenerate the database.");
+                                    break;
+
+                                default:
+                                    std::cout << "INVALID INPUT! Please enter Y or N only!" << std::endl;
+                                    is_invalid_input = true;
+                                    break;
+                            }
+                        } while (is_invalid_input);                      
+
+                    }
+                    else
+                    {
+                        prompt_generate_database();
+                    }                  
+                
                     break;
                 }
 
             //Reads and displays student profiles from database
             case 2:
                 {
-                    show_screen("Reading from database...\n", false);                    
+                    show_screen("Reading from database...\n", false);
+                    //Throughout this .cpp file, delays are added to make the user interface feels more natural
+                    // Delay 0.5 second                    
                     std::this_thread::sleep_for(std::chrono::milliseconds(500)); 
                     
                     if (std::filesystem::exists(Common::database_file))
@@ -164,6 +213,102 @@ void show_screen(const std::string& content, bool waitForEnter, bool clear_displ
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 }
+
+void prompt_generate_database()
+{    
+    show_screen
+    (
+        "Do you want to change the number of student profiles to generate?\n"
+        "(Default is 100 student profiles)\n\n"
+        "Yes(Y): Set a custom number of student profiles to generate\n"
+        "No(N): Use the default setting\n",
+        false
+    ); 
+
+    bool is_invalid_input;
+
+    do
+    {
+        is_invalid_input = false;
+
+        std::cout << "Enter Y or N: " << std::endl;
+        char option;
+        std::cin >> option;
+        std::cin.ignore(); // remove leftover newline
+        option = std::tolower(static_cast<unsigned char>(option));
+
+        std::cout << std::endl;
+
+        switch(option)
+        {
+            //Custom setting
+            case 'y':            
+                {                
+                    show_screen("Please input the number of student profiles you would like to generate.", false);
+
+                    std::string input;
+
+                    while (true)
+                    {
+                        std::cout << "Enter digits only: ";
+                        std::cin >> input;
+                        std::cin.ignore(); // remove leftover newline
+
+                        std::cout << std::endl;
+
+                        if (is_digits_only(input))
+                            break;
+
+                        std::cout << "Invalid input. Digits only!" << std::endl;
+                    }
+
+                    Common::entries_amt = std::stoi(input);                
+
+                    initiate_generator(Common::entries_amt);
+                    break;
+                }
+
+            //Default setting
+            case 'n':
+                {
+                    Common::entries_amt = DEFAULT_AMT;
+                    initiate_generator(Common::entries_amt);
+                    break;
+                }
+
+            default:
+                std::cout << "INVALID INPUT! Please enter Y or N only!" << std::endl;
+                is_invalid_input = true;
+                break;           
+        }
+    } while (is_invalid_input); 
+}
+
+//Starts the generation of student profiles
+void initiate_generator(int amt)
+{
+    show_screen("Generating " + std::to_string(amt) + " student profiles...\n", false); 
+    std::this_thread::sleep_for(std::chrono::seconds(1));  
+
+    //The constructor of StudentProfile class calls the various random generators.
+    StudentProfile profile;
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(500)); 
+    show_screen(std::to_string(amt) + " profiles generated successfully!", true, false);
+}
+
+bool is_digits_only(const std::string& s)
+{
+    if (s.empty()) return false;
+
+    for (char c : s)
+    {
+        if (!std::isdigit(static_cast<unsigned char>(c)))
+            return false;
+    }
+    return true;
+}
+
 
 //Read student profiles from the database
 bool read_profiles()
@@ -333,6 +478,8 @@ bool prompt_delete_record()
     std::cin >> option;
     std::cin.ignore(); // remove leftover newline
     option = std::tolower(static_cast<unsigned char>(option));
+
+    std::cout << std::endl;
 
     switch(option)
     {

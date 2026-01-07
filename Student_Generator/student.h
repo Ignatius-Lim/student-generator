@@ -13,7 +13,9 @@
 class Common
 {
 public:
-    //The static keyword below ensures that any function can access the member function without having to create an obj
+    /*The static keywords below ensure that any functions can access the 
+    member function/variables below without having to create an object of Common class*/
+
     static int RNG_engine(int, int); 
 
     //.txt file names, used for file read, write, and delete. 
@@ -21,7 +23,7 @@ public:
     static const std::string representative_file;
 
     // The number of student profile entries to be created
-    static const int entries_amt;
+    static int entries_amt;
 
 };
 
