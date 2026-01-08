@@ -1,7 +1,6 @@
 //***This file handles the random generation of student profiles***
 
 #include "student.h"
-//#define DEBUG //Comment this out when not debugging
 
 
 StudentProfile::StudentProfile() //Constructor
@@ -42,7 +41,14 @@ bool StudentProfile::id_exists(const std::string& fullID) const
 {
     for (const auto& idg : id_gen)
         if (idg.get_full_id() == fullID) //loop through id_gen[i].get_full_id() to check for duplicate
+        {
+            #ifdef DEBUG
+            Common::dupe_student_id++; 
+            #endif
+
             return true;
+        }
+            
     return false;
 }
 
@@ -72,7 +78,14 @@ bool StudentProfile::name_exists(const std::string& fullName) const
 {
     for (const auto& n : name)
         if (n.get_full_name() == fullName)
+        {
+            #ifdef DEBUG
+            Common::dupe_student_name++;
+            #endif
+
             return true;
+        }
+            
     return false;
 }
 

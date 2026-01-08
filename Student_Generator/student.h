@@ -8,6 +8,8 @@
 #include <string>
 #include <vector>
 
+//#define DEBUG //Comment this out when not debugging
+
 //========================= Below are class declarations ================================
 
 class Common
@@ -24,6 +26,11 @@ public:
 
     // The number of student profile entries to be created
     static int entries_amt;
+
+    #ifdef DEBUG
+    static int dupe_student_name;
+    static int dupe_student_id; 
+    #endif
 
 };
 

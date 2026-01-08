@@ -1,4 +1,22 @@
 # Student Profiles Generator  
+## What does this program do?  
+This program will generate a database of random student profiles and save them to a file.  
+Each student profile will have the following information:
+1. Random name (Determined by randomly generated ethnicity)
+2. Random dominant language (Influenced by ethnicity. Note that this is not the same as native languages)
+3. Random student ID
+
+Once the student profiles are generated and saved to the database file, the other parts of the program rely on the database file for their respective functions. So users can actually modify this database file to make changes to the entries according to their will. But user must follow strictly the formatting of the database file. The end of the database file must not have more than one blank line.
+
+<u>Below are all the functions of the program:</u>
+1. Generate default/user-defined number of student profiles and save them to a file.  
+*(Default is 100 student profiles)*
+2. Read from the file and show a formatted display of the profiles on terminal.
+3. Randomly pick a school representative from the 100 generated students and save the result.  
+User can delete the result and re-pick a school representative randomly.
+4. Delete the file containing the 100 student profile data.
+5. Exit the program.
+
 ## How to run this program?  
 1. Launch Codespaces by clicking on the green Code button and go to Codespace tab.
 2. In Codespaces, install the following extensions:
@@ -33,26 +51,8 @@ The inconsistences are the results of me practicing on applying different soluti
 1. **Update 1:** Added feature to inform user that database file exists and asks if user wants to regenerate a new one.
 2. **Update 2:** Added feature to allow user to customize the number of student profiles to generate.
 3. **Bug fix 1:** Fix a bug that causes infinite loop when the user provides non-numerical input when numbers are expected.
-4. **Bug fix 2** When user inputs multiple characters where a single character is expected, the program will no longer misidentify it as multiple inputs.
-    
-## What does this program do?  
-This program will generate a database of random student profiles and save them to a file.  
-Each student profile will have the following information:
-1. Random name (Determined by randomly generated ethnicity)
-2. Random dominant language (Influenced by ethnicity. Note that this is not the same as native languages)
-3. Random student ID
-
-Once the student profiles are generated and saved to the database file, the other parts of the program rely on the database file for their respective functions. So users can actually modify this database file to make changes to the entries according to their will. But user must follow strictly the formatting of the database file. The end of the database file must not have more than one blank line.
-
-<u>Below are all the functions of the program:</u>
-1. Generate default/user-defined number of student profiles and save them to a file.  
-*(Default is 100 student profiles)*
-2. Read from the file and show a formatted display of the profiles on terminal.
-3. Randomly pick a school representative from the 100 generated students and save the result.  
-User can delete the result and re-pick a school representative randomly.
-4. Delete the file containing the 100 student profile data.
-5. Exit the program.  
-
+4. **Bug fix 2** When user inputs multiple characters where a single character is expected, the program will no longer misidentify it as multiple inputs.  
+ 
 ## How does the program work?  
 The program is splited into multiple modules. Each module is responsible for one or a group of related functions.  
 Below are the modules and their workings:  

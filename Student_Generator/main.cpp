@@ -103,7 +103,15 @@ int main()
                     else
                     {
                         prompt_generate_database();
-                    }                  
+                    }
+                    
+                    #ifdef DEBUG
+                    show_screen
+                    (
+                    "Dupe Student name: " + std::to_string(Common::dupe_student_name) + "\n"
+                    "Dupe Student ID: " + std::to_string(Common::dupe_student_id) + "\n"
+                    );
+                    #endif
                 
                     break;
                 }

@@ -7,7 +7,12 @@ const std::string Common::database_file = "profiles.txt";
 const std::string Common::representative_file = "representative.txt";
 
 // The number of student profile entries to be created
-int Common::entries_amt;
+int Common::entries_amt; 
+
+#ifdef DEBUG
+int Common::dupe_student_name = 0; 
+int Common::dupe_student_id = 0; 
+#endif
 
 
 int Common::RNG_engine(int min, int max)
