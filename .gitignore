@@ -5,6 +5,7 @@
 !*.cpp
 !*.h
 !*.json
+!*.png
 
 # Also don't ignore directories themselves (so Git can see files inside)
 !*/
