@@ -117,3 +117,8 @@ If database file is not found, prompts user to generate it by using the generate
 4. Deletes the database file.
 5. Terminates the program.
 
+## Class Diagram
+![Student Generator Class Diagram](Diagrams/class_diagram.png)
+
+## Sequence Diagram
+![Student Generation Sequence](Diagrams/sequence_diagram.png)
